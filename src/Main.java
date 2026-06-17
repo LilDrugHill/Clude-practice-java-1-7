@@ -1,4 +1,5 @@
 import enums.Material;
+import models.Building;
 import models.Slab;
 import models.Wall;
 import models.Window;
@@ -17,6 +18,10 @@ public class Main {
                 new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true),
                 new Wall("Перегородка", Material.BRICK, new Dimensions(4, 0.12, 3), false),
                 new Window("Панорамное окно", Material.GLASS, new Dimensions(2, 0.05, 1.5), true),
+                new Slab("Перекрытие 1 этажа", Material.CONCRETE, new Dimensions(6, 4, 0.2)),
+                new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true),
+                new Wall("Перегородка", Material.BRICK, new Dimensions(4, 0.12, 3), false),
+                new Window("Панорамное окно", Material.GLASS, new Dimensions(2, 0.05, 1.5), true),
                 new Slab("Перекрытие 1 этажа", Material.CONCRETE, new Dimensions(6, 4, 0.2))
         };
 
@@ -26,5 +31,13 @@ public class Main {
         var w1 = new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true);
         var w2 = new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true);
         System.out.println(w1.equals(w2));
+
+        Building.Builder builder = new Building.Builder().withAddress("Lenin's street 6");
+        Arrays.stream(elements).forEach(builder::addElement);
+        Building building = builder.build();
+
+        BuildingElement[] walls = building.filter((el) -> el instanceof Wall);
+        Arrays.stream(walls).forEach((el) -> System.out.println(el.report()));
+
     }
 }
