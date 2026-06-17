@@ -1,27 +1,30 @@
-import Classes.BuildingElement;
-import Classes.UnitRegistry;
-import enums.*;//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+import enums.Material;
+import models.Slab;
+import models.Wall;
+import models.Window;
+import models.abstracts.BuildingElement;
 import records.Dimensions;
 
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    BuildingElement e1 = new BuildingElement(
-            "Доска",
-            Material.WOOD,
-            new Dimensions(1000, 100, 5)
-    );
+import java.util.Arrays;
 
-    BuildingElement e2 = new BuildingElement(
-            "Кирпич",
-            Material.BRICK,
-            new Dimensions(500, 100, 20));
+public class Main {
+    // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+    public static void main(String[] args) {
+        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
+        // to see how IntelliJ IDEA suggests fixing it.
 
-    BuildingElement e3 = new BuildingElement(
-            "Стальной лист",
-            Material.STEEL,
-            new Dimensions(1000, 500, 2));
+        BuildingElement[] elements = {
+                new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true),
+                new Wall("Перегородка", Material.BRICK, new Dimensions(4, 0.12, 3), false),
+                new Window("Панорамное окно", Material.GLASS, new Dimensions(2, 0.05, 1.5), true),
+                new Slab("Перекрытие 1 этажа", Material.CONCRETE, new Dimensions(6, 4, 0.2))
+        };
 
-    System.out.println(UnitRegistry.getInstance().format(BuildingElement.totalMass(e1, e2, e3)));
+        BuildingElement.printCatalog(elements);
+        Arrays.stream(elements).forEach((x) -> System.out.println(x.report()));
+
+        var w1 = new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true);
+        var w2 = new Wall("Несущая стена", Material.CONCRETE, new Dimensions(6, 0.3, 3), true);
+        System.out.println(w1.equals(w2));
+    }
 }
