@@ -5,24 +5,19 @@ import intefaces.Repository;
 import java.util.Arrays;
 
 public class ArrayRepository<T> implements Repository<T> {
+    private final int START_ARRAY_SIZE = 10;
     private T[] elements;
-    private int size;
+    private int size = 0;
 
     @SuppressWarnings(value = "unchecked")
-    public ArrayRepository(int size) {
-        elements = (T[]) new Object[size];
-        this.size = size;
+    public ArrayRepository() {
+        elements = (T[]) new Object[START_ARRAY_SIZE];
     }
     @Override
     public void add(T element) {
         if (element == null) { return; }
-        int counter = 0;
-        while (elements[counter++] != null) {
-            if (counter == size) {
-                resizeArray();
-            }
-        }
-        elements[counter] = element;
+        if (size == elements.length) { resizeArray(); }
+        elements[size++] = element;
     }
 
     @Override
@@ -42,8 +37,7 @@ public class ArrayRepository<T> implements Repository<T> {
     }
 
     private void resizeArray() {
-        this.size *= 2;
-        this.elements = Arrays.copyOf(this.elements, this.size);
+        this.elements = Arrays.copyOf(this.elements, this.size * 2);
     }
 
 }

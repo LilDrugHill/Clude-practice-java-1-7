@@ -1,8 +1,5 @@
 import enums.Material;
-import models.Building;
-import models.Slab;
-import models.Wall;
-import models.Window;
+import models.*;
 import models.abstracts.BuildingElement;
 import records.Dimensions;
 
@@ -38,6 +35,16 @@ public class Main {
 
         BuildingElement[] walls = building.filter((el) -> el instanceof Wall);
         Arrays.stream(walls).forEach((el) -> System.out.println(el.report()));
+
+        double prByMass = new Estimator(new ByMassPrice()).estimate(walls);
+        double prByVolume = new Estimator(new ByVolumePrice()).estimate(walls);
+
+        System.out.println("By Volume: " + prByVolume);
+        System.out.println("By Mass: " + prByMass);
+        if (prByVolume > prByMass) {
+            System.out.println("By Volume: " + prByVolume);
+            System.out.println("By Mass: " + prByMass);
+        }
 
     }
 }

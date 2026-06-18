@@ -9,7 +9,7 @@ public class Estimator {
         this.priceStrategy = priceStrategy;
     }
 
-    double estimate(BuildingElement[] buildingElements) {
+    public double estimate(BuildingElement[] buildingElements) {
         double price = 0.0d;
         for(BuildingElement buildingElement : buildingElements){
             price += priceStrategy.price(buildingElement);
